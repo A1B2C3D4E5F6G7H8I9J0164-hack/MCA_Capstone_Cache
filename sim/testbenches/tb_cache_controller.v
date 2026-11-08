@@ -1,5 +1,5 @@
-\`timescale 1ns/1ps
-// Controller-level verification with behavioural cache/memory models.
+`timescale 1ns/1ps
+// Controller-level verification with behavioural cache and memory models.
 // The real decoder and cache_storage are supplied by the other task owners.
 module tb_cache_controller;
   reg clk, reset, cpu_req, cpu_write;
@@ -89,21 +89,16 @@ module tb_cache_controller;
     end
   end
 
-  // Delayed memory with one outstanding request and a one-cycle ready pulse.
+  // Delayed one-outstanding-request memory model; ready is a one-cycle pulse.
   always @(posedge clk) begin
     if (reset) begin
-      memory_busy <= 0;
-      countdown <= 0;
-      mem_ready <= 0;
-      mem_block_data <= 0;
-      saved_mem_addr <= 0;
-      saved_mem_data <= 0;
-      saved_mem_write <= 0;
+      memory_busy <= 0; countdown <= 0; mem_ready <= 0;
+      mem_block_data <= 0; saved_mem_addr <= 0;
+      saved_mem_data <= 0; saved_mem_write <= 0;
     end else begin
       mem_ready <= 0;
       if (!memory_busy && mem_req) begin
-        memory_busy <= 1;
-        countdown <= 3;
+        memory_busy <= 1; countdown <= 3;
         saved_mem_addr <= mem_addr;
         saved_mem_data <= mem_write_data;
         saved_mem_write <= mem_write_en;
@@ -111,8 +106,7 @@ module tb_cache_controller;
         if (countdown > 1)
           countdown <= countdown - 1;
         else begin
-          memory_busy <= 0;
-          mem_ready <= 1;
+          memory_busy <= 0; mem_ready <= 1;
           if (saved_mem_write)
             memory[saved_mem_addr[31:2] % 4096] <= saved_mem_data;
           else begin
@@ -131,16 +125,15 @@ module tb_cache_controller;
     input [31:0] address, expected;
     begin
       @(negedge clk);
-      cpu_addr = address; cpu_write = 0; cpu_wdata = 0; cpu_req = 1;
-      @(negedge clk); cpu_req = 0;
-      timeout = 0;
+      cpu_addr=address; cpu_write=0; cpu_wdata=0; cpu_req=1;
+      @(negedge clk); cpu_req=0; timeout=0;
       while (cpu_ready !== 1'b1 && timeout < 60) begin
-        @(negedge clk); timeout = timeout + 1;
+        @(negedge clk); timeout=timeout+1;
       end
       if (cpu_ready !== 1'b1 || cpu_rdata !== expected) begin
-        $display("FAIL read %h expected=%h actual=%h", address, expected, cpu_rdata);
-        errors = errors + 1;
-      end else $display("PASS read %h -> %h", address, cpu_rdata);
+        $display("FAIL read %h expected=%h actual=%h",address,expected,cpu_rdata);
+        errors=errors+1;
+      end else $display("PASS read %h -> %h",address,cpu_rdata);
       @(negedge clk);
     end
   endtask
@@ -149,15 +142,14 @@ module tb_cache_controller;
     input [31:0] address, data;
     begin
       @(negedge clk);
-      cpu_addr = address; cpu_write = 1; cpu_wdata = data; cpu_req = 1;
-      @(negedge clk); cpu_req = 0;
-      timeout = 0;
+      cpu_addr=address; cpu_write=1; cpu_wdata=data; cpu_req=1;
+      @(negedge clk); cpu_req=0; timeout=0;
       while (cpu_ready !== 1'b1 && timeout < 60) begin
-        @(negedge clk); timeout = timeout + 1;
+        @(negedge clk); timeout=timeout+1;
       end
       if (cpu_ready !== 1'b1) begin
-        $display("FAIL write timeout %h", address); errors = errors + 1;
-      end else $display("PASS write %h <- %h", address, data);
+        $display("FAIL write timeout %h",address); errors=errors+1;
+      end else $display("PASS write %h <- %h",address,data);
       @(negedge clk);
     end
   endtask
@@ -180,9 +172,9 @@ module tb_cache_controller;
     repeat(3) @(negedge clk);
     reset=0; @(negedge clk);
 
-    $display("TEST: cold miss and 4-word refill");
+    $display("TEST: cold miss and four-word refill");
     check_read(32'h0000_0000,32'hA0A0_0000);
-    $display("TEST: repeated address and next word are hits");
+    $display("TEST: repeated address and next word hit");
     check_read(32'h0000_0000,32'hA0A0_0000);
     check_read(32'h0000_0004,32'hB1B1_0001);
     $display("TEST: conflicting tag at same index replaces line");
@@ -194,14 +186,14 @@ module tb_cache_controller;
       $display("FAIL write-hit not in memory"); errors=errors+1;
     end
     check_read(32'h0000_0004,32'h1234_5678);
-    $display("TEST: write miss allocates, updates selected word and writes through");
+    $display("TEST: write miss allocates and writes through");
     check_write(32'h0000_0804,32'h8765_4321);
     if (memory[513] !== 32'h8765_4321) begin
       $display("FAIL write-miss not in memory"); errors=errors+1;
     end
     check_read(32'h0000_0804,32'h8765_4321);
 
-    $display("TEST: busy request is discarded, original miss still completes");
+    $display("TEST: busy request is discarded; original miss completes");
     @(negedge clk);
     cpu_addr=32'h0000_0C00; cpu_write=0; cpu_req=1;
     @(negedge clk); cpu_req=0; timeout=0;
@@ -217,11 +209,10 @@ module tb_cache_controller;
         @(negedge clk); timeout=timeout+1;
       end
       if (cpu_ready !== 1'b1 || cpu_rdata !== 32'hACAC_0000) begin
-        $display("FAIL original busy-period request returned wrong result"); errors=errors+1;
+        $display("FAIL original busy-period request returned wrong data"); errors=errors+1;
       end else $display("PASS original request completed; busy request was not queued");
       @(negedge clk);
     end
-    // A later explicit request for 0x10 is accepted and returns word 4 (zero).
     check_read(32'h0000_0010,32'h0000_0000);
 
     if (total_accesses !== 32'd11 || total_hits !== 32'd5 || total_misses !== 32'd6) begin
