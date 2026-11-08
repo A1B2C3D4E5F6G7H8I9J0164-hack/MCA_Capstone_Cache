@@ -177,6 +177,8 @@ module tb_cache_controller;
     $display("TEST: repeated address and next word hit");
     check_read(32'h0000_0000,32'hA0A0_0000);
     check_read(32'h0000_0004,32'hB1B1_0001);
+    check_read(32'h0000_0008,32'hC2C2_0002);
+    check_read(32'h0000_000C,32'hD3D3_0003);
     $display("TEST: conflicting tag at same index replaces line");
     check_read(32'h0000_0400,32'hE4E4_0000);
     check_read(32'h0000_0000,32'hA0A0_0000);
@@ -215,11 +217,11 @@ module tb_cache_controller;
     end
     check_read(32'h0000_0010,32'h0000_0000);
 
-    if (total_accesses !== 32'd11 || total_hits !== 32'd5 || total_misses !== 32'd6) begin
-      $display("FAIL counters expected 11/5/6 got %0d/%0d/%0d",
+    if (total_accesses !== 32'd13 || total_hits !== 32'd7 || total_misses !== 32'd6) begin
+      $display("FAIL counters expected 13/7/6 got %0d/%0d/%0d",
                total_accesses,total_hits,total_misses);
       errors=errors+1;
-    end else $display("PASS counters accesses=11 hits=5 misses=6");
+    end else $display("PASS counters accesses=13 hits=7 misses=6");
 
     if (errors==0) $display("FINAL RESULT: ALL CONTROLLER TESTS PASSED");
     else $display("FINAL RESULT: %0d CONTROLLER TEST(S) FAILED",errors);
