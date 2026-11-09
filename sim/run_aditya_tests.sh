@@ -45,3 +45,4 @@ echo "================================================================"
 echo "PASS: Address Decoder unit verification completed successfully!"
 echo "Waveform generated at: sim/waveforms/address_decoder.vcd"
 echo "================================================================"
+
