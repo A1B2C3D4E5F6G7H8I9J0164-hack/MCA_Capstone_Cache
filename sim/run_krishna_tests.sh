@@ -3,6 +3,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 mkdir -p sim/waveforms
+export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
 command -v iverilog >/dev/null 2>&1 || { echo "ERROR: install Icarus Verilog (iverilog/vvp)"; exit 127; }
 command -v vvp >/dev/null 2>&1 || { echo "ERROR: vvp not found"; exit 127; }
 OUT_DIR="${TMPDIR:-/tmp}/mca-cache-phase1-tests"
@@ -14,6 +15,9 @@ run_test() {
   echo "=== Run: $top ==="
   vvp "$OUT_DIR/$output"
 }
+if [[ -f rtl/address_decoder.v && -f sim/testbenches/tb_address_decoder.v ]]; then
+  run_test tb_address_decoder address_decoder.vvp rtl/address_decoder.v sim/testbenches/tb_address_decoder.v
+fi
 run_test tb_cache_controller controller.vvp rtl/cache_controller.v rtl/performance_monitor.v sim/testbenches/tb_cache_controller.v
 run_test tb_main_memory main_memory.vvp memory/main_memory_model.v sim/testbenches/tb_main_memory.v
 run_test tb_performance_monitor performance_monitor.vvp rtl/performance_monitor.v sim/testbenches/tb_performance_monitor.v
