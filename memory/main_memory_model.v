@@ -4,7 +4,8 @@
 module main_memory_model #(
     parameter ADDR_WIDTH = 32,
     parameter MEM_WORDS  = 4096,
-    parameter LATENCY    = 5
+    parameter LATENCY    = 5,
+    parameter MEM_INIT_FILE = ""
 )(
     input wire clk,
     input wire reset,
@@ -58,9 +59,12 @@ module main_memory_model #(
     // -----------------------------------------
 
     initial begin
-        for (i = 0; i < MEM_WORDS; i = i + 1)
-            mem[i] = 32'h00000000;
-    end
+    for (i = 0; i < MEM_WORDS; i = i + 1)
+        mem[i] = 32'h00000000;
+
+    if (MEM_INIT_FILE != "")
+        $readmemh(MEM_INIT_FILE, mem);
+end
 
 
     // -----------------------------------------
