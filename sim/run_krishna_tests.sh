@@ -20,6 +20,9 @@ if [[ -f rtl/address_decoder.v && -f sim/testbenches/tb_address_decoder.v ]]; th
 fi
 run_test tb_cache_controller controller.vvp rtl/cache_controller.v rtl/performance_monitor.v sim/testbenches/tb_cache_controller.v
 run_test tb_main_memory main_memory.vvp memory/main_memory_model.v sim/testbenches/tb_main_memory.v
+if [[ -f sim/testbenches/tb_memory_init.v ]]; then
+  run_test tb_memory_init memory_init.vvp memory/main_memory_model.v sim/testbenches/tb_memory_init.v
+fi
 run_test tb_performance_monitor performance_monitor.vvp rtl/performance_monitor.v sim/testbenches/tb_performance_monitor.v
 if [[ -f rtl/address_decoder.v && -f rtl/cache_storage.v ]]; then
   echo "=== Elaborate integrated cache_top ==="
