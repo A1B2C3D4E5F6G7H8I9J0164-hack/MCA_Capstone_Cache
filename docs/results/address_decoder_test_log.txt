@@ -1,0 +1,57 @@
+================================================================
+Compiling: Address Decoder & Tag Comparator Unit Testbench
+================================================================
+================================================================
+Running: Address Decoder & Tag Comparator Unit Simulation
+================================================================
+VCD info: dumpfile sim/waveforms/address_decoder.vcd opened for output.
+================================================================
+   STARTING ADDRESS DECODER & COMPARATOR UNIT TESTBENCH
+   Author: Aditya Rana | Module: rtl/address_decoder.v
+================================================================
+
+TEST 1: KNOWN ADDRESS FIELD DECODING
+PASS: Field extraction correct for all sample addresses
+
+TEST 2: LINE INDEX SWEEP ACROSS ALL 64 CACHE LINES (0 TO 63)
+PASS: All 64 direct-mapped cache indices decoded correctly
+
+TEST 3: WORD SELECTOR SWEEP (WORDS 0, 1, 2, 3)
+PASS: Word offsets 0, 1, 2, 3 decoded with 32-bit alignment
+
+TEST 4: CACHE HIT EVALUATION (VALID=1, TAG_MATCH=1)
+PASS: Cache hit asserted when valid=1 and tag matches
+
+TEST 5: CACHE MISS VIA TAG MISMATCH (VALID=1, TAG_MATCH=0)
+PASS: Tag match and hit are deasserted on tag mismatch
+
+TEST 6: COLD / COMPULSORY MISS (VALID=0, TAG_MATCH=1)
+PASS: Stored valid=0 correctly suppresses hit even when tags match
+
+TEST 7: INVALID LINE AND TAG MISMATCH (VALID=0, TAG_MATCH=0)
+PASS: tag_match=0 and hit=0 when both valid=0 and tag mismatch
+
+TEST 8: TAG BIT ISOLATION (WALKING 1s AND 0s)
+PASS: All 22 tag bits independently verified (no shorts or stuck bits)
+
+TEST 9: COMBINATIONAL SETTLING AND ZERO-LATENCY PROPAGATION
+PASS: Purely combinational propagation confirmed
+
+TEST 10: RANDOMIZED STRESS TEST (200 RANDOM VECTORS)
+PASS: 200 random vectors passed self-checking reference model
+
+================================================================
+   ADDRESS DECODER UNIT VERIFICATION REPORT
+================================================================
+TOTAL CHECKS EXECUTED : 374
+TOTAL ERRORS DETECTED : 0
+
+FINAL RESULT: ALL 10 TEST SUITES PASSED SUCCESSFULLY!
+RTL Module: rtl/address_decoder.v is fully verified.
+================================================================
+
+sim/testbenches/tb_address_decoder.v:360: $finish called at 382000 (1ps)
+================================================================
+PASS: Address Decoder unit verification completed successfully!
+Waveform generated at: sim/waveforms/address_decoder.vcd
+================================================================

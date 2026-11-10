@@ -7,6 +7,7 @@ A 32-bit, 1 KiB direct-mapped cache prototype with 64 lines, 16-byte blocks, fou
 - [Architecture](docs/architecture.md)
 - [RTL interface contract](docs/rtl_interface_contract.md)
 - [Krishna's implementation notes](docs/krishna_implementation.md)
+- [Aditya's implementation notes](docs/aditya_implementation.md)
 
 ## Modules and owners
 
