@@ -57,3 +57,4 @@ The module was verified using Icarus Verilog (`iverilog`) through a self-checkin
 | **Total** | **Combined Verification Coverage** | **374** | **100% PASS** |
 
 Waveform traces were recorded to `sim/waveforms/address_decoder.vcd` confirming that output signals transition immediately upon input changes with zero timing violations.
+
