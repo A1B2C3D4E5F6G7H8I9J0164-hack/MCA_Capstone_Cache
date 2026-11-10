@@ -1,0 +1,221 @@
+$date
+	Tue Nov 10 10:45:47 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_performance_monitor $end
+$var wire 32 ! total_misses [31:0] $end
+$var wire 32 " total_hits [31:0] $end
+$var wire 32 # total_accesses [31:0] $end
+$var reg 1 $ access_complete $end
+$var reg 1 % clk $end
+$var reg 1 & hit_event $end
+$var reg 1 ' miss_event $end
+$var reg 1 ( reset $end
+$var integer 32 ) errors [31:0] $end
+$scope module dut $end
+$var wire 1 $ access_complete $end
+$var wire 1 % clk $end
+$var wire 1 & hit_event $end
+$var wire 1 ' miss_event $end
+$var wire 1 ( reset $end
+$var reg 32 * total_accesses [31:0] $end
+$var reg 32 + total_hits [31:0] $end
+$var reg 32 , total_misses [31:0] $end
+$upscope $end
+$scope task send_access $end
+$var reg 1 - is_hit $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+x-
+bx ,
+bx +
+bx *
+b0 )
+1(
+0'
+0&
+0%
+0$
+bx #
+bx "
+bx !
+$end
+#5000
+b0 !
+b0 ,
+b0 "
+b0 +
+b0 #
+b0 *
+1%
+#10000
+0%
+#15000
+1%
+#20000
+0%
+#21000
+0(
+#25000
+1%
+#26000
+1-
+#30000
+1&
+1$
+0%
+#35000
+b1 "
+b1 +
+b1 #
+b1 *
+1%
+#40000
+0&
+0$
+0%
+#45000
+1%
+#50000
+1&
+1$
+0%
+#55000
+b10 "
+b10 +
+b10 #
+b10 *
+1%
+#60000
+0&
+0$
+0%
+#65000
+1%
+#70000
+1&
+1$
+0%
+#75000
+b11 "
+b11 +
+b11 #
+b11 *
+1%
+#80000
+0-
+0&
+0$
+0%
+#85000
+1%
+#90000
+1'
+1$
+0%
+#95000
+b1 !
+b1 ,
+b100 #
+b100 *
+1%
+#100000
+0'
+0$
+0%
+#105000
+1%
+#110000
+1'
+1$
+0%
+#115000
+b10 !
+b10 ,
+b101 #
+b101 *
+1%
+#120000
+0'
+0$
+0%
+#125000
+1%
+#130000
+1'
+1$
+0%
+#135000
+b11 !
+b11 ,
+b110 #
+b110 *
+1%
+#140000
+0'
+0$
+0%
+#145000
+1%
+#150000
+1&
+0%
+#155000
+1%
+#160000
+0&
+0%
+#165000
+1%
+#170000
+1'
+1&
+1$
+0%
+#175000
+1%
+#180000
+0'
+0&
+0$
+0%
+#185000
+1%
+#190000
+1$
+0%
+#195000
+1%
+#200000
+0$
+0%
+#205000
+1%
+#210000
+1(
+0%
+#215000
+b0 !
+b0 ,
+b0 "
+b0 +
+b0 #
+b0 *
+1%
+#220000
+0(
+0%
+#225000
+1%
+#226000
