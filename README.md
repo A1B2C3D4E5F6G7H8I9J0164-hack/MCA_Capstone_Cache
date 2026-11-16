@@ -12,6 +12,14 @@ A 32-bit, 1 KiB direct-mapped cache prototype with 64 lines, 16-byte blocks, fou
 - [IEEE report](report/Cache_Controller_IEEE_Report.pdf) ([source](report/Cache_Controller_IEEE_Report.tex); figures rebuild with `python3 report/make_figures.py`)
 - [Synthesis results](synth/README.md)
 
+## Phase I prototype video report
+
+[Watch/download the Phase I prototype video report](demo/Phase_I_Prototype_Video_Report.mov) (4 minutes 2 seconds).
+
+The recording covers the project idea, team roles and planned individual contributions, and the prototype implementation/progress. It does not demonstrate testing. The testing demonstration is pending for Phase II; existing test results and verification artefacts remain documented below.
+
+See [video scope and phase requirements](demo/README.md). This recording is the Phase I submission video, not a Phase II final demonstration.
+
 ## Modules and owners
 
 | Module | Owner | File |
